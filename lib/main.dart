@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
-        fontFamily: "Poppins",
+        // fontFamily: "Poppins",
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
