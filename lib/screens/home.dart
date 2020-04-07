@@ -141,6 +141,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.all(5.0),
@@ -168,7 +169,21 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
-                        Divider(),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                countries[index]["name"].toUpperCase(),
+                                style: TextStyle(
+                                  letterSpacing: 1.1,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   );
