@@ -9,11 +9,6 @@ class _HomeState extends State<Home> {
   List _nums = [
     "1",
     "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
   ];
   String _searchTerm = "";
   @override
@@ -32,7 +27,6 @@ class _HomeState extends State<Home> {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10),
-            width: double.infinity,
             height: 150.0,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -40,7 +34,7 @@ class _HomeState extends State<Home> {
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     margin: EdgeInsets.all(10),
-                    width: 200.0,
+                    width: MediaQuery.of(context).size.width - 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.white,
@@ -51,7 +45,7 @@ class _HomeState extends State<Home> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey,
-                          blurRadius: 2.0,
+                          blurRadius: 1.0,
                         )
                       ],
                     ),
@@ -77,7 +71,7 @@ class _HomeState extends State<Home> {
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
-                  20.0,
+                  30.0,
                 ),
                 borderSide: BorderSide(
                   width: 0.1,
@@ -102,23 +96,24 @@ class _HomeState extends State<Home> {
                 itemCount: _nums.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                      margin: EdgeInsets.all(10.0),
-                      width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white,
-                        border: Border.all(
-                          width: 1,
-                          color: Colors.grey[200],
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 2.0,
-                          )
-                        ],
-                      ));
+                    margin: EdgeInsets.all(10.0),
+                    width: double.infinity,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey[200],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 1.0,
+                        )
+                      ],
+                    ),
+                  );
                 },
               ),
             ),
