@@ -130,9 +130,8 @@ class _NewsState extends State<News> {
                                 _news[index]["title"].trim(),
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18.0,
-                                    letterSpacing: 1.2,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w600),
                               ),
                               Expanded(
                                 child: Container(
@@ -142,8 +141,8 @@ class _NewsState extends State<News> {
                                   child: Text(
                                     _news[index]["content"],
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                      fontSize: 12.0,
                                     ),
                                     overflow: TextOverflow.fade,
                                   ),
@@ -155,6 +154,16 @@ class _NewsState extends State<News> {
                                     Icons.person,
                                     color: Colors.white,
                                     size: 18.0,
+                                  ),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Text(
+                                    _news[index]["author"],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.0,
+                                    ),
                                   ),
                                 ],
                               )

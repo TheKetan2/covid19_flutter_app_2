@@ -1,5 +1,6 @@
 import 'package:covid19_flutter_app_2/screens/home.dart';
 import 'package:covid19_flutter_app_2/screens/info.dart';
+import 'package:covid19_flutter_app_2/screens/map_screen.dart';
 import 'package:covid19_flutter_app_2/screens/news.dart';
 import 'package:covid19_flutter_app_2/screens/video.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
     "Home",
     "News",
     "Video",
+    "Map",
     "Information",
   ];
   List<Widget> screens = [
     Home(),
     News(),
     Video(),
+    MapScreen(),
     Info(),
   ];
   @override
@@ -49,11 +52,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(appbarTitle[_currentIndex]),
-        leading: Icon(_currentIndex == 0
-            ? Icons.home
-            : _currentIndex == 1
-                ? Icons.book
-                : _currentIndex == 2 ? Icons.videocam : Icons.info),
+        leading: Icon(
+          _currentIndex == 0
+              ? Icons.home
+              : _currentIndex == 1
+                  ? Icons.book
+                  : _currentIndex == 2
+                      ? Icons.videocam
+                      : _currentIndex == 3 ? Icons.map : Icons.info,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -85,6 +92,13 @@ class _MyHomePageState extends State<MyHomePage> {
               Icons.videocam,
             ),
             title: Text('Videos'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(
+              Icons.map,
+            ),
+            title: Text('Maps'),
           ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
