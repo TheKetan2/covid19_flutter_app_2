@@ -14,7 +14,7 @@ class _NewsState extends State<News> {
   bool isLoading = true;
   @override
   void initState() {
-    _fetchNews();
+    if (_news.length == 0) _fetchNews();
     super.initState();
   }
 
@@ -24,7 +24,7 @@ class _NewsState extends State<News> {
 
   void _fetchNews() async {
     String newsUrl =
-        "http://newsapi.org/v2/everything?q=${_searchTerm}&from=2020-03-07&sortBy=publishedAt&apiKey=5ef6a7bc43bb42389d8ff1222c699615";
+        "https://newsapi.org/v2/everything?q=${_searchTerm}&sortBy=popularity&apiKey=5ef6a7bc43bb42389d8ff1222c699615";
 
     try {
       http.Response data = await http.get(newsUrl);
@@ -42,77 +42,128 @@ class _NewsState extends State<News> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        // TextField(
-        //   decoration: InputDecoration(
-        //     border: OutlineInputBorder(
-        //       borderRadius: BorderRadius.circular(
-        //         30.0,
-        //       ),
-        //       borderSide: BorderSide(
-        //         width: 0.1,
-        //       ),
-        //     ),
-        //     hintText: "Search for country",
-        //     prefixIcon: Icon(Icons.search),
-        //   ),
-        //   // onSubmitted: (String value) {
-        //   //   _searchNewsTopic(_searchTerm);
-        //   // },
-        //   onChanged: (String value) {
-        //     setState(() {
-        //       _searchTerm = value;
-        //     });
+    return Container(
+      child: _news.length == 0
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                  Text("Loading news..."),
+                ],
+              ),
+            )
+          : ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: _news.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 5,
+                  ),
+                  height: 355,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      10.0,
+                    ),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      //Image Container
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                          ),
+                          child: _news[index]["urlToImage"] == null
+                              ? Image.asset(
+                                  "assets/img/no_image.png",
+                                  fit: BoxFit.cover,
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(9),
+                                    topRight: Radius.circular(9),
+                                  ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: _news[index]["urlToImage"],
+                                    placeholder: (context, url) => Image.asset(
+                                      "assets/img/no_image.png",
+                                      fit: BoxFit.cover,
+                                      height: 400,
+                                      width: double.infinity,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                      ),
 
-        //     print("hi");
-        //   },
-        // ),
-        Expanded(
-          child: Container(
-            child: ListView.builder(
-                itemCount: _news.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    width: double.infinity,
-                    height: 200.0,
-                    margin: EdgeInsets.symmetric(vertical: 5.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        10.0,
-                      ),
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.grey[200],
-                      ),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            10.0,
-                          ),
-                          child: CachedNetworkImage(
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            imageUrl: _news[index]["urlToImage"],
-                            width: 200.0,
-                            height: 200.0,
-                            fit: BoxFit.cover,
+                      // News text container
+                      Container(
+                        padding: EdgeInsets.all(
+                          5,
+                        ),
+                        height: 150,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black87,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10.0),
+                            bottomRight: Radius.circular(10),
                           ),
                         ),
-                        Text(
-                          _news[index]["title"],
-                          style: TextStyle(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-          ),
-        ),
-      ],
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                _news[index]["title"].trim(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    letterSpacing: 1.2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 5,
+                                  ),
+                                  child: Text(
+                                    _news[index]["content"],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                    ),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 18.0,
+                                  ),
+                                ],
+                              )
+                            ]),
+                      ),
+                    ],
+                  ),
+                );
+              }),
     );
   }
 }
