@@ -7,11 +7,17 @@
 - news reader for latest covid19 related updates
 - map for showing affected areas, used previous app's code :P
   
+
 ### Youtube Link
 https://www.youtube.com/watch?v=n9E-ctiaWHg
 
 ### Executable apk
 It is provided in assets folder of repository
+
+### Deployment
+install packages
+```flutter packages get```
+and then run on emulator or physical device
 
 ### Snapshots
 
