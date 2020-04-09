@@ -1,14 +1,21 @@
-### Covid19 App2 for Topcoder's 3rd flutter challenge.
+# Covid19 App2 for Topcoder's 3rd flutter challenge.
 
-## Functionality
+### Functionality
 - displays world data
 - countrywise data
 - pie chart for visualising data
 - news reader for latest covid19 related updates
 - map for showing affected areas, used previous app's code :P
   
-# Youtube Link
+### Youtube Link
 https://www.youtube.com/watch?v=n9E-ctiaWHg
 
-# Executable apk
+### Executable apk
 It is provided in assets folder of repository
+
+### Snapshots
+
+![Home Screen](assets/img/home.png)
+![News Screen](assets/img/news.png)
+![Maps Screen](assets/img/map.png)
+![Info Screen](assets/img/info.png)
