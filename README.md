@@ -17,7 +17,7 @@ It is provided in assets folder of repository
 ### Deployment
 install packages
 ```flutter packages get```
-and then run on emulator or physical device
+run on emulator or physical device
 
 ### Snapshots
 
