@@ -11,4 +11,4 @@
 https://www.youtube.com/watch?v=n9E-ctiaWHg
 
 # Executable apk
-in assets folder of repository
+It is provided in assets folder of repository
