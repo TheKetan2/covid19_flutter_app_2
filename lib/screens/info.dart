@@ -42,7 +42,7 @@ class _InfoState extends State<Info> {
             height: 10,
           ),
           Text(
-            "HOW IT SPREADS",
+            "PREVENTION",
             style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.green[500],
