@@ -3,6 +3,9 @@ import "../utils/countries.dart";
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:http/http.dart" as http;
 import 'dart:convert';
+import "package:loading_animations/loading_animations.dart";
+import "package:fl_chart/fl_chart.dart";
+import "package:flutter_vector_icons/flutter_vector_icons.dart";
 
 class Home extends StatefulWidget {
   @override
@@ -13,7 +16,8 @@ class _HomeState extends State<Home> {
   dynamic _totalCountries = [],
       _filteredCountries = [],
       _worldData,
-      forChartData;
+      _dataForPieChart;
+  int _touchedIndex;
 
   List<dynamic> countries = totalCountries;
   String _searchTerm = "";
@@ -32,6 +36,7 @@ class _HomeState extends State<Home> {
         _totalCountries = decodeCountries;
         _filteredCountries = decodeCountries;
         _worldData = decodeTotal;
+        _dataForPieChart = _worldData;
       });
     } catch (error) {
       print("something went wrong...");
@@ -64,19 +69,19 @@ class _HomeState extends State<Home> {
 
             _filteredCountries = tempCountry;
           });
-    // print("ketan");
   }
 
   @override
   Widget build(BuildContext context) {
-    var _controllerTE = TextEditingController();
     return Scaffold(
       body: _filteredCountries.length == 0
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircularProgressIndicator(),
+                  LoadingBouncingGrid.square(
+                    backgroundColor: Colors.deepOrange,
+                  ),
                   Text("Loading data..."),
                 ],
               ),
@@ -95,35 +100,35 @@ class _HomeState extends State<Home> {
                 ),
 
                 //World Highlights
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  height: 80.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey[200],
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _dataForPieChart = _worldData;
+                    });
+                    print(_dataForPieChart);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    height: 80.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _buildWorldCotainer(
+                            data: "${_worldData["cases"]}" +
+                                " [+${_worldData["todayCases"]}]",
+                            title: "Cases",
+                            color: Colors.orange),
+                        _buildWorldCotainer(
+                            data: "${_worldData["recovered"]}",
+                            title: "Recovered",
+                            color: Colors.green),
+                        _buildWorldCotainer(
+                            data: "${_worldData["cases"]}" +
+                                " [+${_worldData["todayCases"]}]",
+                            title: "Cases",
+                            color: Colors.red),
+                      ],
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      _buildWorldCotainer(
-                          data: "${_worldData["cases"]}" +
-                              " [+${_worldData["todayCases"]}]",
-                          title: "Cases",
-                          color: Colors.orange),
-                      _buildWorldCotainer(
-                          data: "${_worldData["recovered"]}",
-                          title: "Recovered",
-                          color: Colors.green),
-                      _buildWorldCotainer(
-                          data: "${_worldData["cases"]}" +
-                              " [+${_worldData["todayCases"]}]",
-                          title: "Cases",
-                          color: Colors.red),
-                    ],
                   ),
                 ),
 
@@ -148,7 +153,10 @@ class _HomeState extends State<Home> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
-                            print("Hi");
+                            print(_filteredCountries[index]);
+                            setState(() {
+                              _dataForPieChart = _filteredCountries[index];
+                            });
                           },
                           child: Card(
                             elevation: 3.0,
@@ -291,12 +299,158 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
+//Pie chart
                 Expanded(
                   flex: 5,
-                  child: Container(),
+                  child: Container(
+                    // height: 100,
+                    child: SingleChildScrollView(
+                      // physics: BouncingScrollPhysics(),
+
+                      child: Center(
+                        child: Container(
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      _dataForPieChart["country"] == null
+                                          ? Icon(
+                                              AntDesign.earth,
+                                              color: Colors.green,
+                                              size: 25,
+                                            )
+                                          : Image.network(
+                                              _dataForPieChart["countryInfo"]
+                                                  ["flag"],
+                                              width: 25,
+                                            ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        _dataForPieChart["country"] == null
+                                            ? "World"
+                                            : _dataForPieChart["country"],
+                                        style: TextStyle(fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  _buildChartSideRow(
+                                    title: "Cases",
+                                    color: Colors.orange,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  _buildChartSideRow(
+                                    title: "Cured",
+                                    color: Colors.green,
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  _buildChartSideRow(
+                                    title: "Deaths",
+                                    color: Colors.red,
+                                  )
+                                ],
+                              ),
+                              Expanded(
+                                child: Container(
+                                  child: PieChart(PieChartData(
+                                      pieTouchData: PieTouchData(
+                                          touchCallback: (pieTouchResponse) {
+                                        setState(() {
+                                          if (pieTouchResponse.touchInput
+                                                  is FlLongPressEnd ||
+                                              pieTouchResponse.touchInput
+                                                  is FlPanEnd) {
+                                            _touchedIndex = -1;
+                                          } else {
+                                            _touchedIndex = pieTouchResponse
+                                                .touchedSectionIndex;
+                                          }
+                                        });
+                                      }),
+                                      borderData: FlBorderData(
+                                        show: false,
+                                      ),
+                                      sectionsSpace: 0,
+                                      centerSpaceRadius: 20,
+                                      sections: [
+                                        PieChartSectionData(
+                                          color: Colors.orange,
+                                          value: _dataForPieChart["cases"]
+                                              .toDouble(),
+                                          title: "",
+                                          radius: 50,
+                                          titleStyle: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        PieChartSectionData(
+                                          color: Colors.green,
+                                          value: _dataForPieChart["recovered"]
+                                              .toDouble(),
+                                          title: "",
+                                          radius: 40,
+                                          titleStyle: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                        PieChartSectionData(
+                                          color: Colors.red,
+                                          value: _dataForPieChart["deaths"]
+                                              .toDouble(),
+                                          title: "",
+                                          radius: 30,
+                                          titleStyle: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        )
+                                      ])),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
+    );
+  }
+
+  Row _buildChartSideRow({String title, Color color}) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 25,
+          height: 20,
+          color: color,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(title)
+      ],
     );
   }
 

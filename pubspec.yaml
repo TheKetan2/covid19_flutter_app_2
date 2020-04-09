@@ -27,6 +27,9 @@ dependencies:
   flutter_vector_icons: ^0.2.1
   flutter_map: ^0.8.2
   cached_network_image: ^2.0.0
+  loading_animations: "^2.1.0"
+  fl_chart: ^0.8.7
+  url_launcher: ^5.4.2
 
 
 dev_dependencies:
@@ -48,6 +51,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/img/no_image.png
+   - assets/img/symptoms.png
+   - assets/img/block-one.png
+   - assets/img/block-two.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

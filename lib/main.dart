@@ -36,14 +36,14 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> appbarTitle = [
     "Home",
     "News",
-    "Video",
+    // "Video",
     "Map",
     "Information",
   ];
   List<Widget> screens = [
     Home(),
     News(),
-    Video(),
+    // Video(),
     MapScreen(),
     Info(),
   ];
@@ -57,9 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ? Icons.home
               : _currentIndex == 1
                   ? Icons.book
-                  : _currentIndex == 2
-                      ? Icons.videocam
-                      : _currentIndex == 3 ? Icons.map : Icons.info,
+                  : _currentIndex == 2 ? Icons.map : Icons.info,
         ),
       ),
       body: Padding(
@@ -86,13 +84,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             title: Text('News'),
           ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(
-              Icons.videocam,
-            ),
-            title: Text('Videos'),
-          ),
+          // BottomNavigationBarItem(
+          //   backgroundColor: Theme.of(context).primaryColor,
+          //   icon: Icon(
+          //     Icons.videocam,
+          //   ),
+          //   title: Text('Videos'),
+          // ),
           BottomNavigationBarItem(
             backgroundColor: Theme.of(context).primaryColor,
             icon: Icon(

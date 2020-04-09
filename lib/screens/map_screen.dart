@@ -386,6 +386,7 @@ class _MapScreenState extends State<MapScreen> {
             pinClicked = false;
           });
           _getCovidData();
+
           _getDetailedData();
         },
         tooltip: 'Get Data',
