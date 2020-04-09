@@ -15,7 +15,7 @@ https://www.youtube.com/watch?v=n9E-ctiaWHg
 It is provided in assets folder of repository
 
 ### Deployment
-install packages
+install packages using
 ```flutter packages get```
 run on emulator or physical device
 
