@@ -504,7 +504,7 @@ class _HomeState extends State<Home> {
               style: TextStyle(
                 color: color,
                 fontSize: 15.0,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
               ),
             ),
             Text(
@@ -512,7 +512,7 @@ class _HomeState extends State<Home> {
               style: TextStyle(
                 color: color,
                 fontSize: 14.0,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
