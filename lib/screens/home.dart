@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   List<dynamic> countries = totalCountries;
   String _searchTerm = "";
 
-  _fetchCovidSata() async {
+  _fetchCovidData() async {
     String urlCountries = "https://corona.lmao.ninja/countries";
     String urlTotal = "https://corona.lmao.ninja/all";
     try {
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     // TODO: implement initState
-    _fetchCovidSata();
+    _fetchCovidData();
     super.initState();
   }
 
@@ -90,13 +90,28 @@ class _HomeState extends State<Home> {
               direction: Axis.vertical,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  "World Highlights",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 1.5,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "World Highlights",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      color: Colors.orange,
+                      onPressed: () {
+                        setState(() {
+                          _filteredCountries = [];
+                        });
+                        _fetchCovidData();
+                      },
+                    ),
+                  ],
                 ),
 
                 //World Highlights
