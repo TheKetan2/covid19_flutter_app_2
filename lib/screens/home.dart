@@ -123,9 +123,9 @@ class _HomeState extends State<Home> {
                             title: "Recovered",
                             color: Colors.green),
                         _buildWorldCotainer(
-                            data: "${_worldData["cases"]}" +
-                                " [+${_worldData["todayCases"]}]",
-                            title: "Cases",
+                            data: "${_worldData["deaths"]}" +
+                                " [+${_worldData["todayDeaths"]}]",
+                            title: "Deaths",
                             color: Colors.red),
                       ],
                     ),
@@ -242,7 +242,7 @@ class _HomeState extends State<Home> {
                                                 data: "${_filteredCountries[index]["deaths"]}" +
                                                     "[+${_filteredCountries[index]["todayDeaths"]}]",
                                                 title: "Deaths",
-                                                color: Colors.orange,
+                                                color: Colors.red,
                                                 width: 90.0),
                                           ],
                                         ),
