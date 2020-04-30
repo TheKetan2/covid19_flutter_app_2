@@ -23,8 +23,8 @@ class _HomeState extends State<Home> {
   String _searchTerm = "";
 
   _fetchCovidData() async {
-    String urlCountries = "https://corona.lmao.ninja/countries";
-    String urlTotal = "https://corona.lmao.ninja/all";
+    String urlCountries = "https://corona.lmao.ninja/v2/countries";
+    String urlTotal = "https://corona.lmao.ninja/v2/all";
     try {
       http.Response dataCountries = await http.get(urlCountries);
       http.Response dataTotal = await http.get(urlTotal);
