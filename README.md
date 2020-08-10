@@ -1,5 +1,7 @@
 # Covid19 App2 for Topcoder's 3rd flutter challenge.
 
+Was amongst 10 winners in this challenge. :)
+
 ### Functionality
 - displays world data
 - countrywise data
